@@ -3,9 +3,9 @@
 #date : 11/28
 #vers 0.0.1
 #purpose : create a tic tac toe game vs computer,
-#manipulate lists, continuously print/update, 
+#manipulate lists, continuously print/update,
 
-#steps : human plays -> check win -> computer plays 
+#steps : human plays -> check win -> computer plays
 # update between steps.
 from random import *
 import numpy as np
@@ -30,7 +30,7 @@ def display(board):
          "| (3,1) | (3,2) | (3,3) |\n",)
 
    print(np.matrix(board))
-   return 
+   return
 
 def human_move(board):
    #human's turn to place his mark.
@@ -39,7 +39,7 @@ def human_move(board):
    row = int(input("row? : "))
    col = int(input("col? : "))
    check = check_grid(row, col, board)
-      
+
    while check == 0:
       cls()
       display(board)
@@ -50,13 +50,23 @@ def human_move(board):
 
    board[row-1][col-1] = 'X'
    ans, char = check_game(row, col, board, 'X')
-   
-   return board, ans
+
+   return board, ans, char
 
 def computer_move(board):
    #computer's turn
    #MI..?
-   return
+   print("comps move.")
+   row = randint(0,3)
+   col = randint(0,3)
+   check = check_grid(row, col, board)
+   while check == 0 :
+      row = randint(0,3)
+      col = randint(0,3)
+      check = check_grid(row, col, board)
+   board[row-1][col-1] = 'O'
+   ans, char = check_game(row, col, board, 'O')
+   return board, ans, char
 
 def check_game(row, col, board, char):
    #comp win, human win, tie?
@@ -72,12 +82,12 @@ def check_game(row, col, board, char):
    else :
        ans = "no"
 
-   #horizontals 
+   #horizontals
    if board[row-1][0] == char and board[row-1][1] == char and board[row-1][2] == char :#hoiz win
       return "yes", char
    else :
       ans = "no"
-  
+
    #vertz
    if board[0][col-1] == char and board[1][col-1] == char and board[2][col-1] == char : #wons!
       return "yes", char
@@ -93,7 +103,7 @@ def check_grid(row, col, board):
       if board[row-1][col-1] == '' :
          check = 1
       else :
-         check = 0    
+         check = 0
    else :
       check = 0
 
@@ -108,27 +118,19 @@ def main():
    while True :
       #display, human, check_valid, check_game, display, comp, check_valid, check_game
       display(board)
-      board, ans = human_move(board)
+      board, ans, char = human_move(board)
       if ans == "yes" :
          print(char, " has won my dude!")
          break
       cls()
       display(board)
-      #put into comp
-      print("comps move.")
-      row = randint(0,3)
-      col - randint(0,3)
-      check = check_grid(row, col, board)
-      while check == 0 :
-         row = randint(0,3)
-         col = randint(0,3)
-         check = check_grid(row, col, board)
-      board[row-1][col-1] = 'O'
-      
-      ans, char = check_game(row, col, board, 'O')
+
+      board, ans, char = computer_move(board)
       if ans == "yes" :
          print(char, " has won my dude!")
+         break
       cls()
+
    print("final board : \n")
    display(board)
    return
