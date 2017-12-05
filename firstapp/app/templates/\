@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title> TTT Game </title>
+    </head>
+  <body>
+    <h1> Welcome to Tic-Tac-Toe </h1>
+    <table>
+    {% for key, value in board.items() %}
+      <tr>
+        {% if 0<key<4 and value=='' %}
+          <th> {{ key }} </th}
+          <td> {{ value }}  </td>
+        {% elif 0<key<4 and value !='' %}
+          <td> test2 </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+    </table>
+  </body>
+</html>
